@@ -1,0 +1,27 @@
+.navbar {
+    background-color: #ff9100;
+    font-family: 'Pacifico', cursive;
+}
+
+
+/* Add a gray color to all navbar links */
+
+.navbar li a,
+.navbar .navbar-brand {
+    color: #2d2d30 !important;
+}
+
+
+/* On hover, the links will turn white */
+
+.navbar-nav li a:hover {
+    color: #fff !important;
+}
+
+
+/* The active link */
+
+.navbar-nav li.active a {
+    color: #fff !important;
+    background-color: #2d2d30 !important;
+}

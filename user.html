@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>PenHeaven</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah|Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/0f0a9d5685.js"></script>
+
+
+
+</head>
+
+<body onload="load();">
+    <div id="carouselHeader" class="carousel slide carousel-fade" data-ride="carousel" data-interval="4000">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="images/stock1.jpg" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="images/stock2.jpg" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="images/stock3.jpg" class="d-block w-100" alt="...">
+            </div>
+        </div>
+    </div>
+
+    <nav class="navbar sticky-top navbar-expand-lg">
+        <a class="navbar-brand" href="./index.html">PenHeaven</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="navbar-collapse collapse" id="navbar">
+            <ul class="nav navbar-nav">
+                <li class="nav-item">
+                    <a class="btn btn-outline-dark" href="./catalogue.html">Access our Catalogue</a>
+                </li>
+            </ul>
+
+            <ul id="signIn" class="nav navbar-nav ml-auto">
+                <div class="btn-group btn-group-toggle">
+                    <button type="button" class="btn btn-outline-dark" onclick="doLogout();">
+                        Logout
+                    </button>
+                    <a class="btn btn-outline-dark" href="./user.html">
+                        View Account
+                    </a>
+                </div>
+
+            </ul>
+
+        </div>
+    </nav>
+
+    <div id="band" class="container mainBody mt-4 mb-4 text-center">
+        <h3>Welcome to your PenHeaven Account!</h3>
+        <p>You can update your details on this page</p>
+        <p>We'd hate to see you go, but you can also delete your account from here</p>
+    </div>
+
+    <div class=" container mainBody mt-4 mb-4 w-50">
+        <div id="loginBanner" class="alert alert-danger">
+            Sorry, You can only use this page while logged in. Please wait while we redirect you to our homepage...
+            <span id="loginBannerSpinner" class="spinner-border spinner-border-sm" role="status"
+                aria-hidden="true"></span>
+        </div>
+        <form id="updateDetailsForm" onsubmit="doUpdate();">
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-at"></i> </span>
+                </div>
+                <input id="userName" class="form-control" type="text" readonly>
+                <small class="form-text text-muted">Sorry, you cannot update your username at this time. You can always
+                    delete your account below and
+                    create a new one!</small>
+            </div> <!-- form-group// -->
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                </div>
+                <input id="firstName" class="form-control" type="text">
+
+                <input id="lastName" class="form-control" type="text">
+            </div>
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+                </div>
+                <input id="email" class="form-control" type="email">
+            </div> <!-- form-group// -->
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-key"></i> </span>
+                </div>
+                <input id="password" class="form-control" type="password">
+            </div> <!-- form-group// -->
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-key"></i> </span>
+                </div>
+                <input id="PasswordTwoElement" class="form-control" type="password">
+                <small class="form-text text-muted">Don't want to change your password? leave me blank!</small>
+            </div> <!-- form-group// -->
+            <div class="form-group">
+                <button type="button" class="btn btn-danger" data-dismiss="modal" data-toggle="modal"
+                    data-target="#deleteModal" onclick="doDeleteConfirmButton()">Delete Account</button>
+                <button type="submit" style="float:right" class="btn btn-primary">Update Details</button>
+            </div> <!-- form-group// -->
+        </form>
+
+    </div>
+    <div id="deleteModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="deleteModal"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Confirm Account Deletion</h5>
+                    <button type="button" onclick="doDeleteButtonReset();" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>You won't be able to add items to the catalogue without an account.</p>
+                    <p>You may also miss the awesome features we are working on for the future</p>
+                    <p>Are you sure you want to delete your account? This action cannot be undone!</p>
+                    <button type="button" onclick="doDeleteButtonReset();" class="btn btn-primary" data-dismiss="modal">
+                        No, Cancel!
+                    </button>
+                    <button id="deleteButton" onclick="doDeleteAccount();" type="button" class="btn btn-danger"
+                        style="float: right" disabled>
+                        <span id="deleteButtonSpinner" class="spinner-border spinner-border-sm" role="status"
+                            aria-hidden="true"></span>
+                        Please Wait...
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <span>© 2019 PenHeaven Ltd.</span>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="./user.js"></script>
+    <script src="./request.js"></script>
+
+</body>
+
+</html>
