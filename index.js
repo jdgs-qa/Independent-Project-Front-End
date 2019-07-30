@@ -23,6 +23,7 @@ function doRegister() {
             });
         return true;
     }
+     $('#register').modal('toggle');
 }
 
 function doLogin() {
@@ -37,6 +38,7 @@ function doLogin() {
         }).catch((error) => {
             console.warn("It definitely didnt work... :(", error);
         });
+        $('#login').modal('toggle');
 }
 
 function loginPart2(response) {
