@@ -6,6 +6,9 @@ confirm_password.onkeyup = validatePassword;
 const pass = document.getElementById("passwordLogin"),
     user = document.getElementById("userLogin");
 
+function load() {
+
+}
 function doRegister() {
     const userData = {};
     const form = document.getElementById("registerForm");
@@ -13,17 +16,16 @@ function doRegister() {
         if (element.id) {
             userData[element.id] = element.value;
         }
-        delete userData.PasswordTwoElement;
-        const dataString = JSON.stringify(userData);
-        makeRequest('POST', 'http://localhost:8080/penHeavenAPI/api/access/account/create', dataString)
-            .then((value) => {
-                console.info("Account Registered successfully!!", value);
-            }).catch((error) => {
-                console.warn("It definitely didnt work... :(", error);
-            });
-        return true;
     }
-     $('#register').modal('toggle');
+    delete userData.PasswordTwoElement;
+    makeRequest('POST', 'http://localhost:8080/penHeavenAPI/api/access/account/create', userData)
+        .then((value) => {
+            console.info("Account Registered successfully!!", value);
+        }).catch((error) => {
+            console.warn("It definitely didnt work... :(", error);
+        });
+    $('#register').modal('toggle');
+    window.location = "./index.html";
 }
 
 function doLogin() {
@@ -31,14 +33,15 @@ function doLogin() {
         "username": user.value,
         "password": pass.value
     };
-    makeRequest('GET', 'http://localhost:8080/penHeavenAPI/api/access/account/searchUsername/' + userData.username)
+    makeRequest('GET', 'http://localhost:8080/penHeavenAPI/api/access/account/login/' + userData.username, userData.password)
         .then((value) => {
             console.log(value);
             loginPart2(value);
         }).catch((error) => {
             console.warn("It definitely didnt work... :(", error);
         });
-        $('#login').modal('toggle');
+    $('#login').modal('toggle');
+    window.location = "./user.html";
 }
 
 function loginPart2(response) {
