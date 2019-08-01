@@ -47,6 +47,8 @@ function doUpdate() {
     }
     makeRequest('POST', hostedURL + APICaller + accountAPI + upd + userData.userName, userData)
         .then((value) => {
+            document.getElementById("loginBanner").className = "alert alert-info";
+        document.getElementById("loginBanner").innerText = "We've got it! Your details have been updated";
             console.log("Account Updated successfully!!", value);
         }).catch((error) => {
             console.warn("It definitely didnt work... :(", error);
@@ -58,7 +60,6 @@ function doDeleteConfirmButton() {
     setTimeout(function () {
         document.getElementById("deleteButton").innerText = "I'm sure, delete my account now";
         document.getElementById("deleteButton").removeAttribute("disabled");
-        document.getElementById("deleteButtonSpinner").className = "";
     }, 5000);
 }
 

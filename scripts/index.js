@@ -39,15 +39,20 @@ function doRegister() {
 }
 
 function checkUsername() {
-    const username = document.getElementById('userName').value;
-    makeRequest('GET', hostedURL + APICaller + accountAPI + search + username)
+    const loginUn = document.getElementById('userName');
+    loginUn.id = "userName2";
+    const un = document.getElementById('userName').value;
+    makeRequest('GET', hostedURL + APICaller + accountAPI + search + un)
     .then((response) => {
-        document.getElementById("duplicateBanner").className = "alert alert-success";
-        document.getElementById("duplicateBanner").innerText = "Awesome! This username is available!";
+        document.getElementById("duplicateBanner").className = "alert alert-danger";
+        document.getElementById("duplicateBanner").innerText = "Sorry, this username is taken. please try another";
         }).catch((error) => {
-            document.getElementById("duplicateBanner").className = "alert alert-danger";
-            document.getElementById("duplicateBanner").innerText = "Sorry, this username is taken. please try another";
+            document.getElementById("duplicateBanner").className = "alert alert-success";
+        document.getElementById("duplicateBanner").innerText = "Awesome! This username is available!";
+        error = null;
+        return error;
 });
+loginUn.id = "userName";
         }
 
 function doLogin() {
