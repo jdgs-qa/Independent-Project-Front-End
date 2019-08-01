@@ -7,32 +7,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah|Pacifico&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Old+Standard+TT|Pacifico&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <script src="https://kit.fontawesome.com/0f0a9d5685.js"></script>
 
-
-
 </head>
 
-<body onload="load();">
-    <div id="carouselHeader" class="carousel slide carousel-fade" data-ride="carousel" data-interval="4000">
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="images/stock1.jpg" class="d-block w-100" alt="...">
-            </div>
-            <div class="carousel-item">
-                <img src="images/stock2.jpg" class="d-block w-100" alt="...">
-            </div>
-            <div class="carousel-item">
-                <img src="images/stock3.jpg" class="d-block w-100" alt="...">
-            </div>
-        </div>
-    </div>
-
-    <nav onload="loadButtons();" class="navbar sticky-top navbar-expand-lg">
+<body onload="loadButtons();">
+    <nav class="navbar sticky-top navbar-expand-lg">
         <a class="navbar-brand" href="./index.html">PenHeaven</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar"
             aria-expanded="false" aria-label="Toggle navigation">
@@ -62,9 +46,23 @@
         </div>
     </nav>
 
+    <div id="carouselHeader" class="carousel slide carousel-fade" data-ride="carousel" data-interval="4000">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="images/stock1.jpg" class="d-block w-100 front" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="images/stock2.jpg" class="d-block w-100 front" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="images/stock3.jpg" class="d-block w-100 front" alt="...">
+            </div>
+        </div>
+    </div>
+
     <div id="band" class="container  mt-4 text-center">
-        <h3>Welcome to Pen Heaven!</h3>
-        <p>The site for all pen and paper collectors and enthusiasts!</p>
+        <h2>Welcome to PenHeaven</h2>
+        <p>The site for all pen and paper collectors and enthusiasts</p>
         <p>We have a growing catalog of stationery items for you to browse. Or register for an account to add you own
             discoveries!
         </p>
@@ -125,15 +123,14 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"> <i class="fa fa-at"></i> </span>
                             </div>
-                            <input id="userLogin" class="form-control" placeholder="Username" type="text" required>
+                            <input id="userName" class="form-control" placeholder="Username" type="text" required>
                         </div>
                         <!-- form-group// -->
                         <div class="form-group input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"> <i class="fa fa-key"></i> </span>
                             </div>
-                            <input id="passwordLogin" class="form-control" placeholder="Password" type="password"
-                                required>
+                            <input id="password" class="form-control" placeholder="Password" type="password" required>
                         </div>
                         <!-- form-group// -->
                         <div class="form-group">
@@ -142,13 +139,33 @@
                         <!-- form-group// -->
                         <div class="form-group">
                             <p class="text-center">Don't have an account?</p>
-                            <button type="button" class="btn btn-link btn-block">Click here to create
+                            <button type="button" class="btn btn-link btn-block" onclick="doLoginToRegister();">Click
+                                here to create
                                 one</button>
                         </div>
 
                     </form>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="success" tabindex="-1" role="dialog" aria-labelledby="loginModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div id="loginSuccess" class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title " id="exampleModalLabel">Success!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-center">Awesome! Your account has been created successfully!</p>
+                    <button type="button" class="btn btn-link btn-block" onclick="doSuccessToLogin();">Click here to
+                        login to your new account</button>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -164,11 +181,13 @@
                 </div>
                 <div class="modal-body ">
                     <form id="registerForm">
+                        <div id="duplicateBanner" class=""></div>
                         <div class="form-group input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"> <i class="fa fa-at"></i> </span>
                             </div>
-                            <input id="userName" class="form-control" placeholder="Username" type="text" required>
+                            <input id="userName" class="form-control" placeholder="Username" type="text"
+                                onchange="checkUsername();" required>
                         </div>
                         <div class="form-group input-group">
                             <div class="input-group-prepend">
@@ -207,8 +226,8 @@
 
                         <div class="form-group">
                             <p class="text-center">Have an account?</p>
-                            <button type="button" class="btn btn-link btn-block" data-toggle="modal"
-                                data-target="#login">Click here to login</button>
+                            <button type="button" class="btn btn-link btn-block" onclick="doRegisterToLogin();">Click
+                                here to login</button>
                         </div>
                     </form>
                 </div>

@@ -1,6 +1,14 @@
-.mainBody {
+body {
+    font-family: 'Old Standard TT', serif !important;
     font-size: 16px;
+    font-weight: bold; 
 }
+
+h2, h3, h5 {
+    font-family: 'Pacifico', cursive !important;
+}
+
+
 
 ul {
     background-color: #ff9100 !important;
@@ -12,6 +20,10 @@ img {
     height: 150px;
 }
 
+.front {
+    height: 300px !important;
+}
+
 footer {
     background-color: #2d2d30;
     color: #ff9100;
@@ -20,13 +32,7 @@ footer {
     text-align: center;
 }
 
-container {
-    background-color: #2d2d30;
-}
 
-input-group-addon {
-    color: #2d2d30;
-}
 
 .navbar {
     color: #2d2d30 !important;
@@ -57,10 +63,3 @@ input-group-addon {
     font-family: Arial, Helvetica, sans-serif !important;
 }
 
-#loginContent{
-    color: #2d2d30 !important;
-}
-
-#registerContent{
-    color: #2d2d30 !important;
-}

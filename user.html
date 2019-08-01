@@ -60,41 +60,41 @@
         </div>
     </nav>
 
-    <div id="band" class="container mainBody mt-4 mb-4 text-center">
+    <div id="title" class="container mainBody mt-4 mb-4 text-center">
         <h3>Welcome to your PenHeaven Account!</h3>
         <p>You can update your details on this page</p>
         <p>We'd hate to see you go, but you can also delete your account from here</p>
     </div>
 
-    <div class=" container mainBody mt-4 mb-4 w-50">
+    <div class="container mainBody mt-4 mb-4 w-50">
         <div id="loginBanner" class="alert alert-danger">
             Sorry, You can only use this page while logged in. Please wait while we redirect you to our homepage...
             <span id="loginBannerSpinner" class="spinner-border spinner-border-sm" role="status"
                 aria-hidden="true"></span>
         </div>
-        <form id="updateDetailsForm" onsubmit="doUpdate();">
+        <form id="updateDetailsForm">
             <div class="form-group input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-at"></i> </span>
                 </div>
-                <input id="userName" class="form-control" type="text" readonly>
-                <small class="form-text text-muted">Sorry, you cannot update your username at this time. You can always
-                    delete your account below and
-                    create a new one!</small>
+                <input id="userName" class="form-control" type="text" value="a" readonly>
+                <!-- <p class="form-text text-muted">Sorry, you cannot update your username at this time. You can always -->
+                <!-- delete your account below and
+                    create a new one!</p> -->
             </div> <!-- form-group// -->
             <div class="form-group input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                 </div>
-                <input id="firstName" class="form-control" type="text">
+                <input id="firstName" class="form-control" type="text" value="a">
 
-                <input id="lastName" class="form-control" type="text">
+                <input id="lastName" class="form-control" type="text" value="a">
             </div>
             <div class="form-group input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
                 </div>
-                <input id="email" class="form-control" type="email">
+                <input id="email" class="form-control" type="email" value="a">
             </div> <!-- form-group// -->
             <div class="form-group input-group">
                 <div class="input-group-prepend">
@@ -107,13 +107,13 @@
                     <span class="input-group-text"> <i class="fa fa-key"></i> </span>
                 </div>
                 <input id="PasswordTwoElement" class="form-control" type="password">
-                <br />
-                <small class="form-text text-muted">Don't want to change your password? leave me blank!</small>
+                <!-- <p class="form-text text-muted">Don't want to change your password? leave me blank!</p> -->
             </div> <!-- form-group// -->
             <div class="form-group">
                 <button type="button" class="btn btn-danger" data-dismiss="modal" data-toggle="modal"
                     data-target="#deleteModal" onclick="doDeleteConfirmButton()">Delete Account</button>
-                <button type="submit" style="float:right" class="btn btn-primary">Update Details</button>
+                <button type="button" onclick="doUpdate();" style="float:right" class="btn btn-primary">Update
+                    Details</button>
             </div> <!-- form-group// -->
         </form>
 
@@ -153,15 +153,10 @@
         </div>
     </footer>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="./scripts/navbarButtons.js"></script>
     <script src="./scripts/user.js"></script>
     <script src="./scripts/request.js"></script>

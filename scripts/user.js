@@ -3,29 +3,34 @@ const password = document.getElementById("password"),
 password.onchange = validatePassword;
 confirm_password.onkeyup = validatePassword;
 
+const hostedURL = "http://api.penheaven.site:8081";
+const localURL = "http://localhost:8080";
+const APICaller = "/penHeavenAPI/api/access";
+const accountAPI = "/account";
+const upd = "/update/";
+const del = "/delete/";
+
 function load() {
-    // VVV !!delete this line before using, otherwise user cant login!! VVV
-    //const loggedIn = true;
-    //const loggedIn = localStorage.getItem('loggedIn';)
-    if (loggedIn === true) {
+    const l = localStorage.getItem('loggedIn');
+    if (l === "true") {
         document.getElementById("loginBanner").className = "alert alert-success";
         document.getElementById("loginBannerSpinner").className = "";
-        document.getElementById("loginBanner").innerText = "Awesome! You have logged in successfully!"
+        document.getElementById("loginBanner").innerText = "Awesome! You have logged in successfully!";
         populateProfile();
     } else {
         setTimeout(function () {
             window.location = "./index.html";
         }, 5000)
     }
-};
+}
 
 function populateProfile() {
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    document.getElementById('userName').value = currentUser.userName;
-    document.getElementById('firstName').value = currentUser.firstName;
-    document.getElementById('lastName').value = currentUser.lastName;
-    document.getElementById('email').value = currentUser.email;
-}
+    const user = JSON.parse(localStorage.getItem('currentUser'));
+    document.getElementById('userName').value = user.userName;
+    document.getElementById('firstName').value = user.firstName;
+    document.getElementById('lastName').value = user.lastName;
+    document.getElementById('email').value = user.email;
+};
 
 
 function doUpdate() {
@@ -37,8 +42,10 @@ function doUpdate() {
         }
     }
     delete userData.PasswordTwoElement;
-    const dataString = JSON.stringify(userData);
-    makeRequest('POST', 'http://localhost:8080/penHeavenAPI/api/access/account/update/' + userData.userName, dataString)
+    if (userData.password === "") {
+        delete userData.password;
+    }
+    makeRequest('POST', hostedURL + APICaller + accountAPI + upd + userData.userName, userData)
         .then((value) => {
             console.log("Account Updated successfully!!", value);
         }).catch((error) => {
@@ -59,7 +66,6 @@ function doDeleteButtonReset() {
     document.getElementById("deleteButton").toggleAttribute("disabled");
     document.getElementById("deleteButtonSpinner").className = "spinner-border spinner-border-sm";
     document.getElementById("deleteButton").innerText = "Please Wait...";
-
 }
 
 function validatePassword() {
@@ -70,15 +76,9 @@ function validatePassword() {
     }
 }
 
-function doLogout() {
-    localStorage.removeItem('currentUser');
-    localStorage.setItem('loggedIn', false);
-    window.location = "./index.html";
-}
-
 function doDeleteAccount() {
     const user = document.getElementById("userName").value;
-    makeRequest('DELETE', 'http://localhost:8080/penHeavenAPI/api/access/account/delete/' + user)
+    makeRequest('DELETE', hostedURL + APICaller + accountAPI + del + user)
         .then((value) => {
             console.log("Account Deleted successfully!!", value);
             doLogout();

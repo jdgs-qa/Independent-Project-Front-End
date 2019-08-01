@@ -6,9 +6,14 @@ confirm_password.onkeyup = validatePassword;
 const pass = document.getElementById("passwordLogin"),
     user = document.getElementById("userLogin");
 
-function load() {
+const hostedURL = "http://api.penheaven.site:8081";
+const localURL = "http://localhost:8080";
+const APICaller = "/penHeavenAPI/api/access";
+const accountAPI = "/account";
+const log = "/login";
+const add = "/create";
+const search = "/searchUsername/";
 
-}
 function doRegister() {
     const userData = {};
     const form = document.getElementById("registerForm");
@@ -18,56 +23,77 @@ function doRegister() {
         }
     }
     delete userData.PasswordTwoElement;
-    makeRequest('POST', 'http://localhost:8080/penHeavenAPI/api/access/account/create', userData)
-        .then((value) => {
-            console.info("Account Registered successfully!!", value);
+    // const j = JSON.stringify(userData);
+    makeRequest('POST', hostedURL + APICaller + accountAPI + add, userData)
+        .then((response) => {
+            console.info("Account Registered successfully!!", response);
+            $('#register').modal('toggle');
+            $('#success').modal('toggle');
         }).catch((error) => {
-            console.warn("It definitely didnt work... :(", error);
+            document.getElementById("duplicateBanner").className = "alert alert-danger";
+            document.getElementById("duplicateBanner").innerText = "Sorry, this username is taken. please try another";
+            //console.warn("It definitely didnt work... :(", error);
         });
-    $('#register').modal('toggle');
-    window.location = "./index.html";
+
+    return false;
 }
+
+function checkUsername() {
+    const username = document.getElementById('userName').value;
+    makeRequest('GET', hostedURL + APICaller + accountAPI + search + username)
+    .then((response) => {
+        document.getElementById("duplicateBanner").className = "alert alert-success";
+        document.getElementById("duplicateBanner").innerText = "Awesome! This username is available!";
+        }).catch((error) => {
+            document.getElementById("duplicateBanner").className = "alert alert-danger";
+            document.getElementById("duplicateBanner").innerText = "Sorry, this username is taken. please try another";
+});
+        }
 
 function doLogin() {
-    const userData = {
-        "username": user.value,
-        "password": pass.value
-    };
-    makeRequest('GET', 'http://localhost:8080/penHeavenAPI/api/access/account/login/' + userData.username, userData.password)
-        .then((value) => {
-            console.log(value);
-            loginPart2(value);
-        }).catch((error) => {
-            console.warn("It definitely didnt work... :(", error);
-        });
-    $('#login').modal('toggle');
-    window.location = "./user.html";
-}
+                const userData = {};
+                const form = document.getElementById("loginForm");
+                for (let element of form.elements) {
+                    if (element.id) {
+                        userData[element.id] = element.value;
+                    }
+                }
+                makeRequest('POST', hostedURL + APICaller + accountAPI + log, userData)
+                    .then((response) => {
+                        loginPart2(response);
+                    }).catch((error) => {
+                        console.warn("It definitely didnt work... :(", error);
+                    });
+
+            }
 
 function loginPart2(response) {
-    const userData = {
-        "username": user.value,
-        "password": pass.value
-    };
-    const check = JSON.parse(response);
-    if (userData.password === check.password) {
-        localStorage.setItem('loggedIn', true);
+                localStorage.setItem('loggedIn', true);
+                const data = response.data;
+                localStorage.setItem('currentUser', JSON.stringify(data));
+                delete response;
+                window.location = "./user.html";
+            }
 
-        delete userData.d;
-        delete check.password;
-        localStorage.setItem('currentUser', JSON.stringify(check));
-        delete check.d;
-        window.location = "./user.html";
-    } else {
-        pass.setCustomValidity('Username or Password Not Recognised');
-        return false;
-    }
-}
+function doSuccessToLogin() {
+                $('#success').modal('toggle');
+                $('#login').modal('toggle');
+            }
+
+function doLoginToRegister() {
+                $('#login').modal('toggle');
+                $('#register').modal('toggle');
+            }
+
+function doRegisterToLogin() {
+                $('#register').modal('toggle');
+                $('#login').modal('toggle');
+            }
 
 function validatePassword() {
-    if (password.value != confirm_password.value) {
-        confirm_password.setCustomValidity("Passwords Don't Match");
-    } else {
-        confirm_password.setCustomValidity('');
-    }
-}
+                if (password.value != confirm_password.value) {
+                    confirm_password.setCustomValidity("Passwords Don't Match");
+                } else {
+                    confirm_password.setCustomValidity('');
+                }
+            }
