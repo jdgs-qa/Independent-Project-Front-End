@@ -65,7 +65,12 @@ function doLogin() {
                 }
                 makeRequest('POST', hostedURL + APICaller + accountAPI + log, userData)
                     .then((response) => {
+                        if (!response.data.userName){
+                            document.getElementById("loginErrorBanner").className = "alert alert-danger";
+                            document.getElementById("loginErrorBanner").innerText = "Sorry, this username or password is incorrect";
+                        } else {
                         loginPart2(response);
+                        }
                     }).catch((error) => {
                         console.warn("It definitely didnt work... :(", error);
                     });
